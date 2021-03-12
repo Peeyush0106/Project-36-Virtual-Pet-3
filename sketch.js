@@ -289,6 +289,9 @@ function draw() {
         if (currentHour >= hourTime + 2 && currentHour <= hourTime + 4) {
             dog.goToRestroom();
         }
+        if (currentHour >= 22 && currentHour <= 8) {
+            dog.goToBed();
+        }
     }
     else if (gameState !== "solving-form") {
         push();
