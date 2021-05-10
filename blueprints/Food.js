@@ -65,6 +65,8 @@ class Food {
             if (data.exists()) {
                 lastFed = data.val();
                 fedTime = (lastFed[0]) + ": " + lastFed[1];
+                hourTime = lastFed[0];
+                minuteTime = lastFed[1];
                 txt10.html("Last Feed Time: " + fedTime);
             }
             else {
@@ -74,7 +76,8 @@ class Food {
             }
         }).catch(function (error) {
             console.error(error);
-            alert("There was a network error. Please check your network speed.");
+            alert("There was an error. Please contact the owner or check your network speed");
         });
     }
+
 }
