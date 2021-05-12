@@ -38,7 +38,7 @@ function createElements() {
     var canvas = createCanvas(700, 500);
     canvas.position(-350, -50);
     loading = createImg("images/loading.gif").attribute("draggable", "false").position((canvas.width / 2), canvas.height / 2).hide();
-    dogImageRun = createImg("images/Running.png").attribute("width", dog.width).attribute("draggable", "false").position(
+    dogImageRun = createImg("images/running.png").attribute("width", dog.width).attribute("draggable", "false").position(
         dog.x - (dog.width / 2),
         dog.y - (dog.height / 2)).hide();
     sadDogIMG = createImg("images/Sad-Dog-Trans.png").attribute("width", dog.width).attribute("draggable", "false").position(
