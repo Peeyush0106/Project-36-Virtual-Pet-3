@@ -9,11 +9,11 @@ class Sprite {
 		this.image1Path = picture1;
 		this.image2Path = picture2;
 
-		var img1 = createImg(this.image1Path).attribute("width", this.width).position(
+		var img1 = createImg(this.image1Path).attribute("draggable", "false").attribute("width", this.width).position(
 			this.x - (this.width / 2),
 			this.y - (this.height / 2)).hide();
 
-		var img2 = createImg(this.image2Path).attribute("width", this.width).position(
+		var img2 = createImg(this.image2Path).attribute("draggable", "false").attribute("width", this.width).position(
 			this.x - (this.width / 2),
 			this.y - (this.height / 2));
 
@@ -46,7 +46,7 @@ class Sprite {
 	goToGarden() {
 		clear();
 		gameState = "garden";
-		createImg("images/Garden-Text.png").attribute("width", 700).attribute("height", 500).position(0, 0);
+		createImg("images/Garden-Text.png").attribute("width", 700).attribute("height", 500).attribute("draggable", "false").position(0, 0);
 		updateGameState(this.name);
 		this.updateGardenVisit();
 		logout = null;
@@ -56,7 +56,7 @@ class Sprite {
 	goToBed() {
 		clear();
 		gameState = "bed";
-		createImg("images/BedRoom-Text.png").attribute("width", 700).attribute("height", 500).position(0, 0);
+		createImg("images/BedRoom-Text.png").attribute("width", 700).attribute("height", 500).attribute("draggable", "false").position(0, 0);
 		updateGameState(this.name);
 		lastSlept[0] = currentHour;
 		lastSlept[1] = minute();
@@ -68,7 +68,7 @@ class Sprite {
 	goToRestroom() {
 		clear();
 		gameState = "restroom";
-		createImg("images/Wash-Room-Text.png").attribute("width", 700).attribute("height", 500).position(0, 0);
+		createImg("images/Wash-Room-Text.png").attribute("width", 700).attribute("height", 500).attribute("draggable", "false").position(0, 0);
 		updateGameState(this.name);
 		this.updateRestroomVisit();
 		logout = null;
