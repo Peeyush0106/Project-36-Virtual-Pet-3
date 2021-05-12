@@ -75,57 +75,45 @@ class Sprite {
 		reset_button = null;
 		createLogoutAndReset();
 	}
-	getVisits(name) {
-		database.ref("Dogs/" + name + "/lastVisits/garden").get().then(function (data) {
+	getVisits() {
+		database.ref("Dogs/" + this.name + "/lastVisits/garden").get().then(function (data) {
 			if (data.exists()) {
 				lastGardenVisit = data.val();
 			}
 			else if (lastGardenVisit[0] !== undefined) {
-				database.ref("Dogs/" + name + "/lastVisits/garden").update({
+				database.ref("Dogs/" + this.name + "/lastVisits/garden").update({
 					0: lastGardenVisit[0],
 					1: lastGardenVisit[1]
 				});
 			}
 		}).catch(function (error) {
 			console.error(error);
-			alert("There was an error. Please contact the owner or check your network speed");
-			location.reload();
 		});
-		database.ref("Dogs/" + name + "/lastVisits/restroom").get().then((data) => {
+		database.ref("Dogs/" + this.name + "/lastVisits/restroom").get().then((data) => {
 			if (data.exists()) {
 				lastRestroomVisit = data.val();
 			}
-			else if (lastGardenVisit[0] !== undefined) {
-				database.ref("Dogs/" + name + "/lastVisits/restroom").update({
-					0: lastGardenVisit[0],
-					1: lastGardenVisit[1]
+			else if (lastRestroomVisit[0] !== undefined) {
+				database.ref("Dogs/" + this.name + "/lastVisits/restroom").update({
+					0: lastRestroomVisit[0],
+					1: lastRestroomVisit[1]
 				});
 			}
 		}).catch(function (error) {
 			console.error(error);
-			alert("There was an error. Please contact the owner or check your network speed");
-			location.reload();
 		});
-		database.ref("Dogs/" + name + "/lastVisits/sleep").get().then((data) => {
+		database.ref("Dogs/" + this.name + "/lastVisits/sleep").get().then((data) => {
 			if (data.exists()) {
 				lastSlept = data.val();
 			}
 			else if (lastSlept[0] !== undefined) {
-				database.ref("Dogs/" + name + "/lastVisits/sleep").update({
+				database.ref("Dogs/" + this.name + "/lastVisits/sleep").update({
 					0: lastSlept[0],
 					1: lastSlept[1]
 				});
 			}
 		}).catch(function (error) {
 			console.error(error);
-			alert("There was an error. Please contact the owner or check your network speed");
-			location.reload();
-		});
-	}
-	updateRestroomVisit() {
-		lastRestroomVisit = [currentHour, minute()];
-		database.ref("Dogs/" + this.name + "/lastVisits").update({
-			restroom: lastRestroomVisit
 		});
 	}
 	updateGardenVisit() {
@@ -134,8 +122,13 @@ class Sprite {
 			garden: lastGardenVisit,
 		});
 	}
+	updateRestroomVisit() {
+		lastRestroomVisit = [currentHour, minute()];
+		database.ref("Dogs/" + this.name + "/lastVisits").update({
+			restroom: lastRestroomVisit
+		});
+	}
 	updateSleepTime() {
-		console.log("Updated Sleep time");
 		database.ref("Dogs/" + this.name + "/lastVisits").update({
 			sleep: lastSlept,
 		});

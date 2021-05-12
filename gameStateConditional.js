@@ -1,4 +1,5 @@
 function controlGameWithGameStates() {
+    // When the main aspects of the game have been initialized
     if (food_initialized && money_initialized) {
         updateGameState(dog.name);
         foodObj.display();
@@ -65,7 +66,6 @@ function controlGameWithGameStates() {
                 textSize(17.5);
                 txt1.html(gameText[0]);
                 txt2.html(gameText[1].slice(0, 43));
-                // txt3.html(gameText[1].slice(0, 33));
                 txt4.html("");
                 pop();
                 feed_button.show();
@@ -84,13 +84,17 @@ function controlGameWithGameStates() {
                 feed_button.hide();
                 txt1.html("");
                 txt2.html("");
-                // txt3.html("");
                 greeting.hide();
             }
             if (gameState === "satis") {
                 dog.image1.hide();
                 if (resetDogMoodTimer <= 15) {
                     dog.image2.hide();
+                    dog.changePicture(dogImageRun);
+                    dogImageRun.position(
+                        dog.x - (dog.width / 2),
+                        dog.y - (dog.height / 2));
+                    dogImageRun.show();
                 }
                 else {
                     dog.image2.show();
@@ -98,19 +102,25 @@ function controlGameWithGameStates() {
                 dog.changePicture(dog.image2);
                 if (resetDogMoodTimer > 0) {
                     counter -= 1;
-                    // if (mouseX < 400 && mouseX > 100 && mouseY < 345 && mouseY > 250) {
-                    if (mousePressedOver(dog.sprite)) {
-                        if (resetDogMoodTimer <= 15) {
-                            dog.changePicture(dogImageRun);
-                            dogImageRun.position(
-                                dog.x - (dog.width / 2),
-                                dog.y - (dog.height / 2));
-                            dogImageRun.show();
-                            dog.x = mouseX;
-                            dog.y = mouseY;
+                    dog.changePicture(dogImageRun);
+                    if (mouseX < 410 && mouseX > 92 && mouseY < 375 && mouseY > 245) {
+                        if (mousePressedOver(dog.sprite)) {
+                            if (resetDogMoodTimer <= 15) {
+                                dogImageRun.position(
+                                    dog.x - (dog.width / 2),
+                                    dog.y - (dog.height / 2));
+                                dogImageRun.show();
+                                dog.x = mouseX;
+                                dog.y = mouseY;
+                            }
+                        }
+                        else {
+                            dog.sprite.x = dog.x;
+                            dog.sprite.y = dog.y;
+                            dog.x = dog.sprite.x;
+                            dog.y = dog.sprite.y;
                         }
                     }
-                    // }
                 }
                 else {
                     gameState = "hungry";
@@ -128,7 +138,6 @@ function controlGameWithGameStates() {
             if (food_stock === 0) {
                 txt1.hide();
                 txt2.hide();
-                // txt3.hide();
                 txt4.hide();
                 txt5.hide();
                 txt6.hide();
@@ -146,6 +155,11 @@ function controlGameWithGameStates() {
         if (currentHour >= 22 && currentHour <= 8) {
             dog.goToBed();
         }
+        if (currentHour === hourTime + 6) {
+            dog.changePicture(sadDogIMG);
+            sadDogIMG.show();
+        }
+        else sadDogIMG.hide();
     }
     else if (gameState !== "solving-form") {
         push();
@@ -154,7 +168,16 @@ function controlGameWithGameStates() {
         text("We are Loading and Saving your's and " + dog.name + "'s details...", 10, 200, 490, 500);
         pop();
     }
-    if (currentHour >= hourTime + 3) {
-        dog.changePicture(dog.image1);
+    if (hourTime) {
+        if (currentHour >= hourTime + 3) {
+            dog.changePicture(dog.image1);
+        }
+    }
+    if (!food_initialized && !money_initialized && gameState !== "solving-form") {
+        dog.image2.hide();
+        loading.show();
+    }
+    else {
+        loading.hide();
     }
 }

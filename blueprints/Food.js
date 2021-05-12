@@ -31,22 +31,23 @@ class Food {
         database.ref("Dogs/" + dogName).update({
             food: food_stock
         });
+        food_initialized = true;
     }
-    getFoodStock(dogName) {
+    async getFoodStock(dogName) {
         var obj = this;
-        database.ref("Dogs/" + dogName + "/food").get().then(function (data) {
+        await database.ref("Dogs/" + dogName + "/food").get().then(function (data) {
             if (data.exists()) {
                 food_stock = data.val();
                 newAccount = false;
-				if (!newAccount){
-					alert("You entered " + dog.name + "'s pet account" + '. Hit "Ok" to continue');
-				}
+                if (!newAccount && !cancelAllCommands) {
+                    food_initialized = true;
+                    alert("You entered " + dogName + "'s pet account" + '. Hit "Ok" to continue');
+                }
             }
             else {
                 newAccount = true;
-                obj.updateFoodStock(dog.name);
+                obj.updateFoodStock(dogName);
             }
-            food_initialized = true;
         }).catch(function (error) {
             console.error(error);
         });
@@ -54,7 +55,7 @@ class Food {
     updateLastFed(dogName) {
         minuteTime = minute();
         hourTime = hour();
-		lastFed = [hourTime, minuteTime];
+        lastFed = [hourTime, minuteTime];
         txt10.html("Last Feed Time: " + fedTime);
         database.ref("Dogs/" + dogName).update({
             lastFeedTime: lastFed
@@ -69,14 +70,8 @@ class Food {
                 minuteTime = lastFed[1];
                 txt10.html("Last Feed Time: " + fedTime);
             }
-            else {
-                database.ref("Dogs/" + dogName).update({
-                    lastFeedTime: ""
-                });
-            }
         }).catch(function (error) {
             console.error(error);
-            alert("There was an error. Please contact the owner or check your network speed");
         });
     }
 

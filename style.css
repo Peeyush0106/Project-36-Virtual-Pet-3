@@ -8,12 +8,3 @@ canvas {
   margin-top: 50px;
   margin-left: 350px;
 }
-
-.undraggable {
-  /* user-drag: none; */
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-drag: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-}
